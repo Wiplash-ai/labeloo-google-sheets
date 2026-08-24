@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base target="_blank">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?!= include('Stylesheet'); ?>
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" role="img"><path d="M9 16.5A7.5 7.5 0 0 1 16.5 9h31A7.5 7.5 0 0 1 55 16.5v31a7.5 7.5 0 0 1-7.5 7.5h-31A7.5 7.5 0 0 1 9 47.5z" fill="#fffef9"/><path d="M19 22h26M19 30h18M19 38h23" fill="none" stroke="#087f78" stroke-width="4" stroke-linecap="round"/><circle cx="47" cy="46" r="8" fill="#d8a327"/><path d="m43.5 46 2.2 2.2 4.8-5" fill="none" stroke="#16201f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <p class="kicker">SHEETS → LABELLOO</p>
+        <h1>Bring the right rows.</h1>
+      </div>
+    </header>
+
+    <main id="app" aria-busy="true">
+      <section class="source-panel" aria-labelledby="sourceTitle">
+        <div class="section-heading">
+          <span class="step-number">01</span>
+          <div><p>Source</p><h2 id="sourceTitle">Choose the table</h2></div>
+        </div>
+        <label class="field" for="sourceMode">
+          <span>Read from</span>
+          <select id="sourceMode"></select>
+        </label>
+        <div id="customRangeWrap" class="custom-range hidden">
+          <label class="field" for="customRange"><span>A1 range</span><input id="customRange" value="A1:F50" spellcheck="false"></label>
+          <button id="loadCustomRange" class="button button--quiet" type="button">Load</button>
+        </div>
+        <div class="range-ticket">
+          <span id="sourceSheet">Waiting for Google Sheets…</span>
+          <strong id="sourceRange">—</strong>
+          <small id="sourceDimensions">Reading your selection</small>
+        </div>
+        <button id="refreshSource" class="text-button" type="button">↻ Refresh the current selection</button>
+      </section>
+
+      <section aria-labelledby="structureTitle">
+        <div class="section-heading">
+          <span class="step-number">02</span>
+          <div><p>Structure</p><h2 id="structureTitle">Tell us how it runs</h2></div>
+        </div>
+        <fieldset class="orientation">
+          <legend>Each label runs in</legend>
+          <div class="segmented">
+            <button type="button" data-orientation="rows" class="selected">Rows</button>
+            <button type="button" data-orientation="columns">Columns</button>
+          </div>
+        </fieldset>
+        <div class="structure-grid">
+          <label class="field" for="headerRow"><span>Field names</span><select id="headerRow"></select></label>
+          <label class="field" for="firstRow"><span>First label</span><select id="firstRow"></select></label>
+          <label class="field" for="lastRow"><span>Last label</span><select id="lastRow"></select></label>
+        </div>
+      </section>
+
+      <section aria-labelledby="mappingTitle">
+        <div class="section-heading section-heading--split">
+          <span class="step-number">03</span>
+          <div><p>Columns</p><h2 id="mappingTitle">Place each field</h2></div>
+          <span id="mappingCount" class="count-badge">0 mapped</span>
+        </div>
+        <div id="mappingList" class="mapping-list"></div>
+      </section>
+
+      <section aria-labelledby="previewTitle">
+        <div class="section-heading section-heading--split">
+          <span class="step-number">04</span>
+          <div><p>Preview</p><h2 id="previewTitle">Before it lands</h2></div>
+          <span id="previewCount" class="count-badge">0 ready</span>
+        </div>
+        <div id="previewList" class="preview-list"></div>
+        <p id="previewMessage" class="message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="connection" aria-labelledby="connectionTitle">
+        <div class="connection-copy">
+          <p class="kicker">PRIVATE HANDOFF</p>
+          <h2 id="connectionTitle">Connect Wiplash.ai once</h2>
+          <p id="connectionMessage">Your mapped labels move only after you continue. The receipt expires in ten minutes.</p>
+        </div>
+        <div id="connectionActions"></div>
+        <div id="connectionCode" class="connection-code hidden" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <footer class="action-dock">
+      <p id="statusMessage" role="status" aria-live="polite"></p>
+      <a id="fallbackLink" class="fallback-link hidden" href="#" target="_blank" rel="noopener">Open Labeloo</a>
+      <button id="continueButton" class="button button--primary" type="button" disabled>
+        <span>Continue in Labeloo</span><span aria-hidden="true">↗</span>
+      </button>
+    </footer>
+
+    <?!= include('Client'); ?>
+  </body>
+</html>
