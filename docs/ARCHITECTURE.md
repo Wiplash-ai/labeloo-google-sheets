@@ -46,5 +46,20 @@ credentials never appear in handoff URLs.
 ## Release boundary
 
 Development uses an Apps Script Editor add-on test deployment attached to a
-specific spreadsheet. Marketplace configuration, OAuth review, screenshots,
-pricing, and public installation remain separate future release work.
+specific spreadsheet. The add-on's dedicated standard Cloud project is
+`labeloo` (`354807729903`), branded as **Labeloo**, with the declared scopes
+mirrored in Google Auth Platform. The project remains in Testing with only the
+developer account allowlisted.
+
+Before public installation:
+
+1. Create the draft Google Workspace Marketplace listing with the same Labeloo
+   name, icon, product, privacy, terms, and support identity.
+2. Record a verification demo that shows why each declared scope is needed.
+3. Complete OAuth verification for the two sensitive Apps Script scopes.
+4. Submit the finished listing for Marketplace app review only after OAuth
+   verification passes.
+
+Do not publish the OAuth audience or submit the Marketplace listing as a
+shortcut around verification. The unverified warning is acceptable for this
+private test deployment, not for production users.

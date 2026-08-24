@@ -34,4 +34,30 @@ sidebar client and generates the HTML fragments consumed by Apps Script.
 This installs only a development test. It does not create a Google Workspace
 Marketplace listing or release the add-on to other users.
 
+## Google production identity
+
+The Apps Script project is named **Labeloo** and is attached to its own standard
+Google Cloud project:
+
+- Project name: `Labeloo`
+- Project ID: `labeloo`
+- Project number: `354807729903`
+- Apps Script ID: `11vwFybJg1_0l_MxWREucltT-Txvhbajnu_tVnd7Qog8khJAY3iclymbw`
+
+The OAuth consent configuration uses the Labeloo name and logo, the Labeloo
+product and privacy pages, Wiplash.ai terms, and the authorized `wiplash.ai`
+domain. The developer Google account is the only test user.
+
+An unpublished test deployment can still show Google's **unverified app**
+warning. That warning's developer-details dialog names the Google account that
+owns the test project. This is expected only while the OAuth project is in
+Testing and verification is incomplete. Do not release the Marketplace listing
+until OAuth verification has passed; the normal consent screen identifies the
+app as **Labeloo**.
+
+Keep this project separate from `labeloo-production`, which serves the existing
+Labeloo Drive/account integration. A public Marketplace add-on needs its own
+standard Cloud project, and this separation prevents new add-on scopes or review
+work from disrupting current Labeloo users.
+
 See [Architecture](docs/ARCHITECTURE.md) for the reusable connector contract.
