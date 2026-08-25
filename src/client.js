@@ -21,6 +21,7 @@ const state = {
   plan: null,
   labels: [],
   connection: { connected: false },
+  connectionBusy: false,
   busy: false,
 };
 
@@ -201,18 +202,22 @@ function renderConnection() {
     const disconnect = document.createElement("button");
     disconnect.className = "button button--quiet button--small";
     disconnect.type = "button";
-    disconnect.textContent = "Disconnect";
+    disconnect.disabled = state.connectionBusy;
+    disconnect.textContent = state.connectionBusy ? "Disconnecting…" : "Disconnect";
     disconnect.addEventListener("click", disconnectConnection);
     elements.connectionActions.append(account, disconnect);
-    elements.connectionMessage.textContent = "Only mapped labels can be sent. This connector cannot read your Labeloo projects or Google Drive.";
+    elements.connectionMessage.textContent = "Saved for this Google account until it expires or you disconnect. Only mapped labels can be sent; this connector cannot read your Labeloo projects or Google Drive.";
   } else {
     const connect = document.createElement("button");
     connect.className = "button button--primary";
     connect.type = "button";
-    connect.textContent = "Connect Wiplash.ai";
+    connect.disabled = state.connectionBusy;
+    connect.textContent = state.connectionBusy ? "Connecting…" : "Connect Wiplash.ai";
     connect.addEventListener("click", startConnection);
     elements.connectionActions.append(connect);
-    elements.connectionMessage.textContent = "Connect once, then use a short-lived receipt whenever you send labels to the editor.";
+    elements.connectionMessage.textContent = state.connectionBusy
+      ? "Confirm the short code in the Wiplash.ai tab. You can return here when it says connected."
+      : "Connect once on this Google account, then reuse the saved connection for future imports.";
   }
   updateContinue();
 }
@@ -232,7 +237,10 @@ function showConnectionCode(pending) {
 }
 
 async function startConnection() {
+  if (state.connectionBusy) return;
   const prepared = window.open("about:blank", "labeloo-connect");
+  state.connectionBusy = true;
+  renderConnection();
   setStatus("Starting the secure Wiplash.ai connection…");
   try {
     const pending = await callServer("beginConnectorAuthorization");
@@ -247,30 +255,38 @@ async function startConnection() {
       });
       if (!result.connected) continue;
       state.connection = result;
-      renderConnection();
       setStatus("Wiplash.ai connected.");
       return;
     }
     throw new Error("That connection expired. Try again.");
   } catch (error) {
     if (prepared && !prepared.closed) prepared.close();
+    state.connection = { connected: false };
     setStatus(error.message, true);
+  } finally {
+    state.connectionBusy = false;
+    renderConnection();
   }
 }
 
 async function disconnectConnection() {
+  if (state.connectionBusy) return;
+  state.connectionBusy = true;
+  renderConnection();
   setStatus("Disconnecting…");
   try {
     state.connection = await callServer("disconnectConnector");
-    renderConnection();
     setStatus("Connector disconnected.");
   } catch (error) {
     setStatus(error.message, true);
+  } finally {
+    state.connectionBusy = false;
+    renderConnection();
   }
 }
 
 function updateContinue() {
-  elements.continueButton.disabled = state.busy || !state.labels.length || !state.connection.connected;
+  elements.continueButton.disabled = state.busy || state.connectionBusy || !state.labels.length || !state.connection.connected;
 }
 
 async function createHandoff() {

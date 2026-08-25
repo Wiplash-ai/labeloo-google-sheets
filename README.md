@@ -61,3 +61,28 @@ standard Cloud project, and this separation prevents new add-on scopes or review
 work from disrupting current Labeloo users.
 
 See [Architecture](docs/ARCHITECTURE.md) for the reusable connector contract.
+
+## Release preparation
+
+The current unpublished build is the public-release candidate. Release and
+review materials live alongside the code:
+
+- [Marketplace listing copy](store-assets/LISTING.md)
+- [OAuth verification packet](docs/OAUTH_VERIFICATION.md)
+- [Marketplace reviewer guide](docs/REVIEWER_GUIDE.md)
+- [End-to-end QA checklist](docs/QA_CHECKLIST.md)
+- [Privacy and data-use inventory](docs/PRIVACY_AND_DATA_USE.md)
+
+The production account and receipt service is deployed at
+`https://auth.wiplash.ai/labeloo`. The Apps Script project remains in Google
+Auth Platform testing and the Marketplace listing must remain a draft until
+OAuth verification succeeds.
+
+Release candidate 1.0.0 is frozen as Apps Script version `1` and deployment
+`AKfycbxLznNHzKFkRIXOX96EPwg5QUYSgYexqJ3-AbIMldEeC0Eg0Vwy8UVA7TEYHlFnYGq1qA`.
+The separate `@HEAD` test deployment remains available for unpublished QA.
+
+## Security and license
+
+Report security concerns privately as described in [SECURITY.md](SECURITY.md).
+Labeloo for Google Sheets is released under the [MIT License](LICENSE).

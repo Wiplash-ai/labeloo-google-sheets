@@ -19,5 +19,13 @@ assert.doesNotMatch(code, /deleteAllProperties\(\)/, "Connector cleanup must not
 assert.match(client, /<script>/);
 assert.doesNotMatch(client, /^\s*import\s/m, "The generated Apps Script client cannot contain module imports.");
 assert.match(sidebar, /Continue in Labeloo/);
+assert.match(sidebar, /https:\/\/labs\.wiplash\.ai\/labeloo\/privacy\//);
+assert.match(sidebar, /https:\/\/labs\.wiplash\.ai\/labeloo\/support\//);
+assert.match(sidebar, /https:\/\/wiplash\.ai\/legal\/terms/);
+assert.match(code, /PropertiesService\.getUserProperties\(\)/, "The connector credential should be scoped to the Google user.");
+assert.match(code, /\/v1\/auth\/connector-authorizations/);
+assert.match(code, /\/v1\/import-receipts/);
+assert.match(code, /MAX_SOURCE_ROWS = 2001/);
+assert.match(code, /MAX_SOURCE_COLUMNS = 100/);
 
 console.log("Verified Apps Script permissions, read-only behavior, and generated UI bundle.");

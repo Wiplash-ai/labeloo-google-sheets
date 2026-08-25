@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 140">
+  <rect width="220" height="140" fill="#16201f"/>
+  <path d="M0 118h220v22H0z" fill="#d8a327"/>
+  <g opacity=".11" stroke="#fffef9"><path d="M0 24h220M0 48h220M0 72h220M0 96h220"/><path d="M24 0v118M48 0v118M72 0v118M96 0v118M120 0v118M144 0v118M168 0v118M192 0v118"/></g>
+  <g transform="translate(18 20)">
+    <rect width="76" height="82" rx="11" fill="#fffef9"/>
+    <path d="M16 23h44M16 36h32M16 49h39" fill="none" stroke="#087f78" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="59" cy="65" r="15" fill="#d8a327"/>
+    <path d="m52 65 5 5 10-11" fill="none" stroke="#16201f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="105" y="37" fill="#8dc9bd" font-family="Arial, sans-serif" font-size="6.5" font-weight="700" letter-spacing=".8">SHEETS → LABELLOO</text>
+  <text x="105" y="61" fill="#fffef9" font-family="Georgia, serif" font-size="17" font-weight="700">Rows in.</text>
+  <text x="105" y="82" fill="#fffef9" font-family="Georgia, serif" font-size="17" font-weight="700">Labels out.</text>
+  <text x="105" y="101" fill="#c8d4d1" font-family="Arial, sans-serif" font-size="7.5">Map. Preview. Print.</text>
+</svg>

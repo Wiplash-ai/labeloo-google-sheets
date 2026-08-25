@@ -1,12 +1,12 @@
 {
   "name": "labeloo-google-sheets",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test tests/*.test.mjs",
-    "verify": "npm test && npm run build && node scripts/verify.mjs",
+    "verify": "npm test && npm run build && node scripts/verify.mjs && node scripts/verify-release.mjs",
     "clasp": "clasp"
   },
   "devDependencies": {

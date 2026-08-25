@@ -172,8 +172,10 @@ function labelFromValues(values) {
     });
   }
   delete merged.fullAddress;
+  const hasPostalAddress = ["address1", "address2", "city", "state", "postal", "country"]
+    .some((field) => Boolean(merged[field]));
   const type = normalizeType(merged.type)
-    || (merged.email ? "email" : merged.customText ? "custom" : merged.address1 ? "address" : "name");
+    || (hasPostalAddress ? "address" : merged.customText ? "custom" : merged.email ? "email" : "name");
   delete merged.type;
   return { type, ...merged };
 }

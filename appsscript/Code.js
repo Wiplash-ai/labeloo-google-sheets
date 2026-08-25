@@ -187,12 +187,15 @@ function clearConnector_() {
 }
 
 function serviceBase_() {
-  const configured = PropertiesService.getScriptProperties().getProperty("LABELLOO_SERVICE_BASE") || LABELLOO_SERVICE_DEFAULT;
-  const url = new URL(configured);
-  if (url.protocol !== "https:" || url.username || url.password || url.search || url.hash) {
+  const configured = String(
+    PropertiesService.getScriptProperties().getProperty("LABELLOO_SERVICE_BASE") || LABELLOO_SERVICE_DEFAULT
+  ).trim();
+  const match = configured.match(/^https:\/\/([a-z0-9](?:[a-z0-9.-]*[a-z0-9])?)(?::([0-9]{1,5}))?(\/[^\s?#]*)?$/i);
+  const port = match && match[2] ? Number(match[2]) : null;
+  if (!match || match[1].includes("..") || (port !== null && (port < 1 || port > 65535))) {
     throw new Error("The Labeloo account service is not configured safely.");
   }
-  return url.toString().replace(/\/$/, "");
+  return configured.replace(/\/+$/, "");
 }
 
 function api_(path, options) {

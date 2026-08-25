@@ -83,7 +83,7 @@
           <h2 id="connectionTitle">Connect Wiplash.ai once</h2>
           <p id="connectionMessage">Your mapped labels move only after you continue. The receipt expires in ten minutes.</p>
         </div>
-        <div id="connectionActions"></div>
+        <div id="connectionActions" class="connection-actions"></div>
         <div id="connectionCode" class="connection-code hidden" aria-live="polite"></div>
       </section>
     </main>
@@ -94,6 +94,11 @@
       <button id="continueButton" class="button button--primary" type="button" disabled>
         <span>Continue in Labeloo</span><span aria-hidden="true">↗</span>
       </button>
+      <nav class="product-links" aria-label="Labeloo links">
+        <a href="https://labs.wiplash.ai/labeloo/privacy/" target="_blank" rel="noopener">Privacy</a>
+        <a href="https://labs.wiplash.ai/labeloo/support/" target="_blank" rel="noopener">Support</a>
+        <a href="https://wiplash.ai/legal/terms" target="_blank" rel="noopener">Terms</a>
+      </nav>
     </footer>
 
     <?!= include('Client'); ?>
