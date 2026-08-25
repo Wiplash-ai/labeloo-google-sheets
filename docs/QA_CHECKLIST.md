@@ -19,6 +19,9 @@
 
 ## Mapping and preview
 
+- [ ] Select, Map, Preview, and Continue appear as four focused stages with only one stage visible at a time.
+- [ ] Back, Next, and previously unlocked progress steps preserve the current range and mapping.
+- [ ] Invalid or empty mappings return the user to Map and prevent access to later stages.
 - [ ] Buried headers are detected.
 - [ ] **No header row** preserves the first data record.
 - [ ] Rows and columns orientations both work.
@@ -44,6 +47,7 @@
 
 ## Listing and accessibility
 
+- [ ] Sidebar and Marketplace artwork use the canonical Labeloo name-tag mark and spell Labeloo consistently.
 - [ ] Sidebar keyboard navigation, focus outlines, status messages, and disabled states work.
 - [ ] Text remains readable at browser and operating-system zoom settings.
 - [ ] Privacy, support, and terms links open the correct public pages.

@@ -1,5 +1,5 @@
-const LABELLOO_CONNECTOR = "google-sheets";
-const LABELLOO_SERVICE_DEFAULT = "https://auth.wiplash.ai/labeloo";
+const LABELOO_CONNECTOR = "google-sheets";
+const LABELOO_SERVICE_DEFAULT = "https://auth.wiplash.ai/labeloo";
 const MAX_SOURCE_ROWS = 2001;
 const MAX_SOURCE_COLUMNS = 100;
 const MAX_SOURCE_CELLS = 200000;
@@ -112,7 +112,7 @@ function snapshotRange_(range, mode) {
 function beginConnectorAuthorization() {
   return api_("/v1/auth/connector-authorizations", {
     method: "post",
-    body: { connector: LABELLOO_CONNECTOR },
+    body: { connector: LABELOO_CONNECTOR },
   });
 }
 
@@ -188,7 +188,9 @@ function clearConnector_() {
 
 function serviceBase_() {
   const configured = String(
-    PropertiesService.getScriptProperties().getProperty("LABELLOO_SERVICE_BASE") || LABELLOO_SERVICE_DEFAULT
+    PropertiesService.getScriptProperties().getProperty("LABELOO_SERVICE_BASE")
+      || PropertiesService.getScriptProperties().getProperty("LABELLOO_SERVICE_BASE")
+      || LABELOO_SERVICE_DEFAULT
   ).trim();
   const match = configured.match(/^https:\/\/([a-z0-9](?:[a-z0-9.-]*[a-z0-9])?)(?::([0-9]{1,5}))?(\/[^\s?#]*)?$/i);
   const port = match && match[2] ? Number(match[2]) : null;

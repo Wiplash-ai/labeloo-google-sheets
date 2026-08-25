@@ -29,11 +29,18 @@ for (const [path, [width, height]] of Object.entries(expectedAssets)) {
 }
 
 const listing = await text("store-assets/LISTING.md");
+const iconSource = await text("store-assets/source/icon-master.svg");
+const bannerSource = await text("store-assets/source/card-banner.svg");
 const shortDescription = listing.match(/## Short description\s+([^\n]+)/)?.[1]?.trim() || "";
 assert.ok(shortDescription.length > 0 && shortDescription.length <= 200, "Marketplace short description must be 1-200 characters.");
 assert.match(listing, /Application name: \*\*Labeloo\*\*/);
 assert.match(listing, /Visibility: Public/);
 assert.match(listing, /keep as draft until OAuth verification succeeds/i);
+for (const artwork of [iconSource, bannerSource]) {
+  assert.match(artwork, /M35 8h15l14 20L78 8h15L70 42H58Z/, "Marketplace artwork must use the canonical Labeloo mark.");
+  assert.doesNotMatch(artwork, /LABELLOO|Labelloo|Labello/, "Marketplace artwork must spell Labeloo correctly.");
+}
+assert.match(bannerSource, /SHEETS → LABELOO/);
 
 const oauth = await text("docs/OAUTH_VERIFICATION.md");
 const privacy = await text("docs/PRIVACY_AND_DATA_USE.md");

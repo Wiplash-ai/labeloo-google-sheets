@@ -210,8 +210,24 @@
     "connectionCode",
     "statusMessage",
     "fallbackLink",
-    "continueButton"
+    "continueButton",
+    "stepHeading",
+    "stepStatus",
+    "stepHint",
+    "backButton",
+    "nextButton",
+    "handoffCount",
+    "handoffSource",
+    "mappingMessage"
   ].map((id) => [id, document.getElementById(id)]));
+  var stepButtons = [...document.querySelectorAll("[data-step-target]")];
+  var stepPanels = [...document.querySelectorAll("[data-step]")];
+  var WORKFLOW_STEPS = Object.freeze([
+    { heading: "Choose your rows.", hint: "Choose the range and record shape.", next: "Map fields" },
+    { heading: "Match the fields.", hint: "Place each spreadsheet column.", next: "Preview labels" },
+    { heading: "Check the labels.", hint: "Review exactly what will be sent.", next: "Connect & continue" },
+    { heading: "Send to Labeloo.", hint: "Connect once, then open the editor.", next: "" }
+  ]);
   var state = {
     sources: [],
     source: null,
@@ -219,7 +235,9 @@
     labels: [],
     connection: { connected: false },
     connectionBusy: false,
-    busy: false
+    busy: false,
+    step: 0,
+    maxStep: 0
   };
   function callServer(method, payload) {
     return new Promise((resolve, reject) => {
@@ -231,6 +249,57 @@
   function setStatus(message, isError = false) {
     elements.statusMessage.textContent = message || "";
     elements.statusMessage.style.color = isError ? "#ffb8b3" : "";
+  }
+  function stepReady(step) {
+    if (step === 0) return Boolean(state.source && state.plan);
+    if (step === 1 || step === 2) return state.labels.length > 0;
+    return true;
+  }
+  function renderWorkflow(focusHeading = false) {
+    const active = WORKFLOW_STEPS[state.step];
+    elements.stepHeading.textContent = active.heading;
+    elements.stepStatus.textContent = `Step ${state.step + 1} of ${WORKFLOW_STEPS.length}`;
+    elements.stepHint.textContent = active.hint;
+    stepPanels.forEach((panel) => {
+      panel.hidden = Number(panel.dataset.step) !== state.step;
+    });
+    stepButtons.forEach((button) => {
+      const step = Number(button.dataset.stepTarget);
+      const current = step === state.step;
+      button.disabled = step > state.maxStep;
+      button.classList.toggle("active", current);
+      button.classList.toggle("complete", step < state.step);
+      if (current) button.setAttribute("aria-current", "step");
+      else button.removeAttribute("aria-current");
+    });
+    elements.backButton.disabled = state.step === 0;
+    elements.nextButton.classList.toggle("hidden", state.step === WORKFLOW_STEPS.length - 1);
+    elements.continueButton.classList.toggle("hidden", state.step !== WORKFLOW_STEPS.length - 1);
+    if (state.step < WORKFLOW_STEPS.length - 1) {
+      elements.nextButton.querySelector("span").textContent = active.next;
+      elements.nextButton.disabled = !stepReady(state.step);
+    }
+    if (focusHeading) {
+      document.scrollingElement?.scrollTo({ top: 0, behavior: "auto" });
+      const heading = stepPanels[state.step]?.querySelector("h2");
+      requestAnimationFrame(() => heading?.focus({ preventScroll: true }));
+    }
+  }
+  function setStep(nextStep, { unlock = false, focus = true } = {}) {
+    const next = Math.max(0, Math.min(WORKFLOW_STEPS.length - 1, Number(nextStep) || 0));
+    if (unlock) state.maxStep = Math.max(state.maxStep, next);
+    if (next > state.maxStep) return;
+    state.step = next;
+    renderWorkflow(focus);
+  }
+  function advanceStep() {
+    if (!stepReady(state.step)) {
+      const message = state.step === 1 ? elements.mappingMessage.textContent || "Map at least one usable label field before previewing." : "Finish this step before continuing.";
+      setStatus(message, true);
+      return;
+    }
+    setStatus("");
+    setStep(state.step + 1, { unlock: true });
   }
   function option(value, label) {
     const item = document.createElement("option");
@@ -256,6 +325,7 @@
     elements.sourceSheet.textContent = `${state.source.workbookName} / ${state.source.sheetName}`;
     elements.sourceRange.textContent = state.source.range;
     elements.sourceDimensions.textContent = `${state.source.rowCount} rows \xB7 ${state.source.columnCount} columns \xB7 displayed values only`;
+    elements.handoffSource.textContent = `${state.source.workbookName} / ${state.source.sheetName} \xB7 ${state.source.range}`;
   }
   function axisRows() {
     return orientedRows(state.source.rows, state.plan.orientation);
@@ -317,6 +387,7 @@
   function renderPreview() {
     elements.previewList.replaceChildren();
     elements.previewMessage.textContent = "";
+    elements.mappingMessage.textContent = "";
     try {
       state.labels = labelsFromTable(state.source.rows, state.plan);
       state.labels.slice(0, 3).forEach((label, index) => {
@@ -337,12 +408,18 @@
         elements.previewList.append(more);
       }
       elements.previewCount.textContent = `${state.labels.length} ready`;
+      elements.handoffCount.textContent = `${state.labels.length} label${state.labels.length === 1 ? "" : "s"}`;
     } catch (error) {
       state.labels = [];
       elements.previewCount.textContent = "0 ready";
+      elements.handoffCount.textContent = "0 labels";
       elements.previewMessage.textContent = error.message;
+      elements.mappingMessage.textContent = error.message;
+      if (state.maxStep > 1) state.maxStep = 1;
+      if (state.step > 1) state.step = 1;
     }
     updateContinue();
+    renderWorkflow();
   }
   function renderMappingAndPreview() {
     renderMapping();
@@ -352,9 +429,12 @@
     state.sources = result.sources;
     state.source = result.source;
     state.plan = createImportPlan(state.source.rows);
+    state.step = 0;
+    state.maxStep = 0;
     renderSources();
     renderStructure();
     renderMappingAndPreview();
+    renderWorkflow();
   }
   async function loadSource(mode, a1 = "") {
     setStatus("Reading the selected cells\u2026");
@@ -394,6 +474,7 @@
       elements.connectionMessage.textContent = state.connectionBusy ? "Confirm the short code in the Wiplash.ai tab. You can return here when it says connected." : "Connect once on this Google account, then reuse the saved connection for future imports.";
     }
     updateContinue();
+    renderWorkflow();
   }
   function showConnectionCode(pending) {
     elements.connectionCode.replaceChildren();
@@ -529,6 +610,11 @@
     state.plan.lastDataRowIndex = Number(elements.lastRow.value);
     renderPreview();
   });
+  stepButtons.forEach((button) => button.addEventListener("click", () => {
+    setStep(Number(button.dataset.stepTarget));
+  }));
+  elements.backButton.addEventListener("click", () => setStep(state.step - 1));
+  elements.nextButton.addEventListener("click", advanceStep);
   elements.continueButton.addEventListener("click", createHandoff);
   async function initialize() {
     try {
@@ -537,6 +623,7 @@
       useSource(initial);
       renderConnection();
       elements.app.setAttribute("aria-busy", "false");
+      renderWorkflow();
       setStatus("");
     } catch (error) {
       elements.app.setAttribute("aria-busy", "false");

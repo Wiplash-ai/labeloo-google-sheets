@@ -4,7 +4,10 @@
 
 Use a classic Apps Script Editor add-on for Google Sheets. It provides the HTML
 sidebar Labeloo needs for source selection, row boundaries, column mapping, and
-preview while remaining installable as an unpublished test deployment.
+preview while remaining installable as an unpublished test deployment. The
+fixed-width sidebar presents those controls as four focused stages: Select,
+Map, Preview, and Continue. Only one stage is visible at a time so dense table
+controls remain legible inside Google Sheets' 300-pixel sidebar.
 
 The connector is deliberately thin:
 

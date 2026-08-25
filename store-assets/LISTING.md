@@ -20,8 +20,9 @@ Choose the cells you already have, the surrounding table, the used sheet
 range, or a custom A1 range. Labeloo detects likely headers, lets you choose the
 first and last records, supports tables that run across rows or columns, and
 maps unfamiliar fields into names, addresses, email labels, name badges, or
-custom text. A live preview shows exactly which records are ready before
-anything leaves the spreadsheet.
+custom text. A focused Select, Map, Preview, and Continue flow keeps each task
+clear inside the Sheets sidebar. A live preview shows exactly which records are
+ready before anything leaves the spreadsheet.
 
 When you click **Continue in Labeloo**, only the mapped label records are sent
 through an encrypted, account-bound, single-use receipt that expires after ten

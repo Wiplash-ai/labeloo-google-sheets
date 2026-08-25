@@ -19,6 +19,12 @@ assert.doesNotMatch(code, /deleteAllProperties\(\)/, "Connector cleanup must not
 assert.match(client, /<script>/);
 assert.doesNotMatch(client, /^\s*import\s/m, "The generated Apps Script client cannot contain module imports.");
 assert.match(sidebar, /Continue in Labeloo/);
+assert.equal((sidebar.match(/data-step="[0-3]"/g) || []).length, 4, "The sidebar must contain four focused workflow stages.");
+assert.equal((sidebar.match(/data-step-target="[0-3]"/g) || []).length, 4, "The progress rail must link to all four workflow stages.");
+assert.match(sidebar, /id="mappingMessage"[^>]*role="status"/, "The Map stage must explain why it cannot continue.");
+assert.match(sidebar, /M35 8h15l14 20L78 8h15L70 42H58Z/, "The sidebar must use the canonical Labeloo mark.");
+assert.match(sidebar, /SHEETS → LABELOO/);
+assert.doesNotMatch(sidebar, /LABELLOO|Labelloo|Labello/, "The public sidebar must spell Labeloo correctly.");
 assert.match(sidebar, /https:\/\/labs\.wiplash\.ai\/labeloo\/privacy\//);
 assert.match(sidebar, /https:\/\/labs\.wiplash\.ai\/labeloo\/support\//);
 assert.match(sidebar, /https:\/\/wiplash\.ai\/legal\/terms/);
@@ -27,5 +33,8 @@ assert.match(code, /\/v1\/auth\/connector-authorizations/);
 assert.match(code, /\/v1\/import-receipts/);
 assert.match(code, /MAX_SOURCE_ROWS = 2001/);
 assert.match(code, /MAX_SOURCE_COLUMNS = 100/);
+assert.match(code, /const LABELOO_CONNECTOR = "google-sheets"/);
+assert.equal((code.match(/LABELLOO_SERVICE_BASE/g) || []).length, 1, "Only the legacy script-property fallback may retain the old typo.");
+assert.doesNotMatch(client, /LABELLOO|Labelloo|Labello/, "The generated client must spell Labeloo correctly.");
 
-console.log("Verified Apps Script permissions, read-only behavior, and generated UI bundle.");
+console.log("Verified Apps Script permissions, read-only behavior, branding, and four-stage UI bundle.");

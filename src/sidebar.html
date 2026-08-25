@@ -8,92 +8,144 @@
   </head>
   <body>
     <header class="masthead">
-      <div class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 64 64" role="img"><path d="M9 16.5A7.5 7.5 0 0 1 16.5 9h31A7.5 7.5 0 0 1 55 16.5v31a7.5 7.5 0 0 1-7.5 7.5h-31A7.5 7.5 0 0 1 9 47.5z" fill="#fffef9"/><path d="M19 22h26M19 30h18M19 38h23" fill="none" stroke="#087f78" stroke-width="4" stroke-linecap="round"/><circle cx="47" cy="46" r="8" fill="#d8a327"/><path d="m43.5 46 2.2 2.2 4.8-5" fill="none" stroke="#16201f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="brand-lockup">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 128 128" role="img">
+            <rect width="128" height="128" rx="24" fill="#16201f"/>
+            <path d="M35 8h15l14 20L78 8h15L70 42H58Z" fill="#d8a327"/>
+            <rect x="54" y="27" width="20" height="16" rx="5" fill="#fffef9"/>
+            <path d="M31 38h66a12 12 0 0 1 12 12v51a12 12 0 0 1-12 12H31a12 12 0 0 1-12-12V50a12 12 0 0 1 12-12Z" fill="#087f78"/>
+            <path d="M29 53h70v45a7 7 0 0 1-7 7H36a7 7 0 0 1-7-7V53Z" fill="#fffef9"/>
+            <path d="M42 68h44" stroke="#16201f" stroke-width="8" stroke-linecap="round"/>
+            <path d="M48 84h32" stroke="#d8a327" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <p class="kicker">SHEETS → LABELOO</p>
+          <h1 id="stepHeading">Choose your rows.</h1>
+        </div>
       </div>
-      <div>
-        <p class="kicker">SHEETS → LABELLOO</p>
-        <h1>Bring the right rows.</h1>
-      </div>
+
+      <nav class="stepper" aria-label="Label import progress">
+        <button type="button" data-step-target="0" class="active" aria-current="step">
+          <span class="step-dot">1</span><span>Select</span>
+        </button>
+        <button type="button" data-step-target="1" disabled>
+          <span class="step-dot">2</span><span>Map</span>
+        </button>
+        <button type="button" data-step-target="2" disabled>
+          <span class="step-dot">3</span><span>Preview</span>
+        </button>
+        <button type="button" data-step-target="3" disabled>
+          <span class="step-dot">4</span><span>Continue</span>
+        </button>
+      </nav>
     </header>
 
     <main id="app" aria-busy="true">
-      <section class="source-panel" aria-labelledby="sourceTitle">
-        <div class="section-heading">
-          <span class="step-number">01</span>
-          <div><p>Source</p><h2 id="sourceTitle">Choose the table</h2></div>
+      <section class="workflow-step" data-step="0" aria-labelledby="selectTitle">
+        <div class="step-intro">
+          <p>Step 1 of 4</p>
+          <h2 id="selectTitle" tabindex="-1">Select the table</h2>
+          <span>Choose the cells and tell Labeloo how each record runs.</span>
         </div>
-        <label class="field" for="sourceMode">
-          <span>Read from</span>
-          <select id="sourceMode"></select>
-        </label>
-        <div id="customRangeWrap" class="custom-range hidden">
-          <label class="field" for="customRange"><span>A1 range</span><input id="customRange" value="A1:F50" spellcheck="false"></label>
-          <button id="loadCustomRange" class="button button--quiet" type="button">Load</button>
-        </div>
-        <div class="range-ticket">
-          <span id="sourceSheet">Waiting for Google Sheets…</span>
-          <strong id="sourceRange">—</strong>
-          <small id="sourceDimensions">Reading your selection</small>
-        </div>
-        <button id="refreshSource" class="text-button" type="button">↻ Refresh the current selection</button>
-      </section>
 
-      <section aria-labelledby="structureTitle">
-        <div class="section-heading">
-          <span class="step-number">02</span>
-          <div><p>Structure</p><h2 id="structureTitle">Tell us how it runs</h2></div>
-        </div>
-        <fieldset class="orientation">
-          <legend>Each label runs in</legend>
-          <div class="segmented">
-            <button type="button" data-orientation="rows" class="selected">Rows</button>
-            <button type="button" data-orientation="columns">Columns</button>
+        <div class="subpanel source-panel">
+          <div class="section-heading"><p>Source</p><h3>Use the right range</h3></div>
+          <label class="field" for="sourceMode">
+            <span>Read from</span>
+            <select id="sourceMode"></select>
+          </label>
+          <div id="customRangeWrap" class="custom-range hidden">
+            <label class="field" for="customRange"><span>A1 range</span><input id="customRange" value="A1:F50" spellcheck="false"></label>
+            <button id="loadCustomRange" class="button button--quiet" type="button">Load</button>
           </div>
-        </fieldset>
-        <div class="structure-grid">
-          <label class="field" for="headerRow"><span>Field names</span><select id="headerRow"></select></label>
-          <label class="field" for="firstRow"><span>First label</span><select id="firstRow"></select></label>
-          <label class="field" for="lastRow"><span>Last label</span><select id="lastRow"></select></label>
+          <div class="range-ticket">
+            <span id="sourceSheet">Waiting for Google Sheets…</span>
+            <strong id="sourceRange">—</strong>
+            <small id="sourceDimensions">Reading your selection</small>
+          </div>
+          <button id="refreshSource" class="text-button" type="button">↻ Refresh the current selection</button>
+        </div>
+
+        <div class="subpanel">
+          <div class="section-heading"><p>Structure</p><h3>Define each record</h3></div>
+          <fieldset class="orientation">
+            <legend>Each label runs in</legend>
+            <div class="segmented">
+              <button type="button" data-orientation="rows" class="selected">Rows</button>
+              <button type="button" data-orientation="columns">Columns</button>
+            </div>
+          </fieldset>
+          <div class="structure-grid">
+            <label class="field" for="headerRow"><span>Field names</span><select id="headerRow"></select></label>
+            <label class="field" for="firstRow"><span>First label</span><select id="firstRow"></select></label>
+            <label class="field" for="lastRow"><span>Last label</span><select id="lastRow"></select></label>
+          </div>
         </div>
       </section>
 
-      <section aria-labelledby="mappingTitle">
-        <div class="section-heading section-heading--split">
-          <span class="step-number">03</span>
-          <div><p>Columns</p><h2 id="mappingTitle">Place each field</h2></div>
+      <section class="workflow-step" data-step="1" aria-labelledby="mappingTitle" hidden>
+        <div class="step-intro step-intro--split">
+          <div><p>Step 2 of 4</p><h2 id="mappingTitle" tabindex="-1">Map the fields</h2></div>
           <span id="mappingCount" class="count-badge">0 mapped</span>
+          <span>Match each spreadsheet column to the part of a label it should fill.</span>
         </div>
         <div id="mappingList" class="mapping-list"></div>
+        <p id="mappingMessage" class="message" role="status" aria-live="polite"></p>
+        <p class="step-note">Each Labeloo field can be used once. Unneeded columns can stay skipped.</p>
       </section>
 
-      <section aria-labelledby="previewTitle">
-        <div class="section-heading section-heading--split">
-          <span class="step-number">04</span>
-          <div><p>Preview</p><h2 id="previewTitle">Before it lands</h2></div>
+      <section class="workflow-step" data-step="2" aria-labelledby="previewTitle" hidden>
+        <div class="step-intro step-intro--split">
+          <div><p>Step 3 of 4</p><h2 id="previewTitle" tabindex="-1">Preview the labels</h2></div>
           <span id="previewCount" class="count-badge">0 ready</span>
+          <span>Check the exact records before anything leaves this spreadsheet.</span>
         </div>
         <div id="previewList" class="preview-list"></div>
         <p id="previewMessage" class="message" role="status" aria-live="polite"></p>
+        <div class="privacy-note"><strong>Still private.</strong> Nothing is transferred until you continue from the final step.</div>
       </section>
 
-      <section class="connection" aria-labelledby="connectionTitle">
-        <div class="connection-copy">
-          <p class="kicker">PRIVATE HANDOFF</p>
-          <h2 id="connectionTitle">Connect Wiplash.ai once</h2>
-          <p id="connectionMessage">Your mapped labels move only after you continue. The receipt expires in ten minutes.</p>
+      <section class="workflow-step" data-step="3" aria-labelledby="connectionTitle" hidden>
+        <div class="step-intro">
+          <p>Step 4 of 4</p>
+          <h2 id="connectionTitle" tabindex="-1">Continue in Labeloo</h2>
+          <span>Connect once, then send this prepared batch to the full label editor.</span>
         </div>
-        <div id="connectionActions" class="connection-actions"></div>
-        <div id="connectionCode" class="connection-code hidden" aria-live="polite"></div>
+
+        <div class="handoff-ticket" aria-label="Import summary">
+          <span>Ready to hand off</span>
+          <strong id="handoffCount">0 labels</strong>
+          <small id="handoffSource">Waiting for a source</small>
+        </div>
+
+        <div class="subpanel connection" aria-label="Wiplash.ai connection">
+          <div class="connection-copy">
+            <p class="kicker">PRIVATE HANDOFF</p>
+            <h3>Connect Wiplash.ai once</h3>
+            <p id="connectionMessage">Your mapped labels move only after you continue. The receipt expires in ten minutes.</p>
+          </div>
+          <div id="connectionActions" class="connection-actions"></div>
+          <div id="connectionCode" class="connection-code hidden" aria-live="polite"></div>
+        </div>
       </section>
     </main>
 
     <footer class="action-dock">
       <p id="statusMessage" role="status" aria-live="polite"></p>
       <a id="fallbackLink" class="fallback-link hidden" href="#" target="_blank" rel="noopener">Open Labeloo</a>
-      <button id="continueButton" class="button button--primary" type="button" disabled>
-        <span>Continue in Labeloo</span><span aria-hidden="true">↗</span>
-      </button>
+      <div class="dock-context">
+        <span id="stepStatus">Step 1 of 4</span>
+        <small id="stepHint">Choose the range and record shape.</small>
+      </div>
+      <div class="step-actions">
+        <button id="backButton" class="button button--quiet" type="button" disabled>← Back</button>
+        <button id="nextButton" class="button button--primary" type="button"><span>Map fields</span><span aria-hidden="true">→</span></button>
+        <button id="continueButton" class="button button--primary hidden" type="button" disabled>
+          <span>Continue in Labeloo</span><span aria-hidden="true">↗</span>
+        </button>
+      </div>
       <nav class="product-links" aria-label="Labeloo links">
         <a href="https://labs.wiplash.ai/labeloo/privacy/" target="_blank" rel="noopener">Privacy</a>
         <a href="https://labs.wiplash.ai/labeloo/support/" target="_blank" rel="noopener">Support</a>

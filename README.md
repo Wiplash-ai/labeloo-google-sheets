@@ -78,8 +78,9 @@ The production account and receipt service is deployed at
 Auth Platform testing and the Marketplace listing must remain a draft until
 OAuth verification succeeds.
 
-Release candidate 1.0.0 is frozen as Apps Script version `1` and deployment
+Release candidate 1.0.0 is frozen as Apps Script version `2` and deployment
 `AKfycbxLznNHzKFkRIXOX96EPwg5QUYSgYexqJ3-AbIMldEeC0Eg0Vwy8UVA7TEYHlFnYGq1qA`.
+Version `1` remains available as the original release-candidate snapshot.
 The separate `@HEAD` test deployment remains available for unpublished QA.
 
 ## Security and license

@@ -24,14 +24,16 @@ Labeloo**.
 3. Confirm **Selected cells**, range `A1:E6`, 6 rows, and 5 columns.
 4. Confirm Labeloo detects row 3 as the field-name row and rows 4 through 6 as
    the three labels.
-5. Confirm the mapping is Name, Address line 1, City, State or region, and ZIP
-   or postal code.
-6. Connect Wiplash.ai, confirm the displayed short code, and return to Sheets.
-7. Click **Continue in Labeloo** and confirm three address labels open in a new
+5. Click **Map fields** and confirm the mapping is Name, Address line 1, City,
+   State or region, and ZIP or postal code.
+6. Click **Preview labels** and confirm the three prepared labels.
+7. Click **Connect & continue**, connect Wiplash.ai if needed, confirm the
+   displayed short code, and return to Sheets.
+8. Click **Continue in Labeloo** and confirm three address labels open in a new
    Labeloo sheet.
-8. Repeat with a smaller selection. The saved connection should be reused and
+9. Repeat with a smaller selection. The saved connection should be reused and
    no second Wiplash sign-in should be required.
-9. Disconnect from the sidebar and confirm Continue is disabled until the
+10. Disconnect from the sidebar and confirm Continue is disabled until the
    account is connected again.
 
 ## Expected permission behavior
