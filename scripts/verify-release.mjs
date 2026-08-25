@@ -35,6 +35,7 @@ const shortDescription = listing.match(/## Short description\s+([^\n]+)/)?.[1]?.
 assert.ok(shortDescription.length > 0 && shortDescription.length <= 200, "Marketplace short description must be 1-200 characters.");
 assert.match(listing, /Application name: \*\*Labeloo\*\*/);
 assert.match(listing, /Visibility: Public/);
+assert.match(listing, /Extensions → Labeloo → Create labels from this sheet/);
 assert.match(listing, /keep as draft until OAuth verification succeeds/i);
 for (const artwork of [iconSource, bannerSource]) {
   assert.match(artwork, /M35 8h15l14 20L78 8h15L70 42H58Z/, "Marketplace artwork must use the canonical Labeloo mark.");

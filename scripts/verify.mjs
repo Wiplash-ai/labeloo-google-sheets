@@ -5,6 +5,7 @@ const manifest = JSON.parse(await readFile(new URL("../appsscript/appsscript.jso
 const code = await readFile(new URL("../appsscript/Code.js", import.meta.url), "utf8");
 const client = await readFile(new URL("../appsscript/Client.html", import.meta.url), "utf8");
 const sidebar = await readFile(new URL("../appsscript/Sidebar.html", import.meta.url), "utf8");
+const stylesheet = await readFile(new URL("../appsscript/Stylesheet.html", import.meta.url), "utf8");
 
 assert.deepEqual(manifest.oauthScopes, [
   "https://www.googleapis.com/auth/spreadsheets.currentonly",
@@ -36,5 +37,8 @@ assert.match(code, /MAX_SOURCE_COLUMNS = 100/);
 assert.match(code, /const LABELOO_CONNECTOR = "google-sheets"/);
 assert.equal((code.match(/LABELLOO_SERVICE_BASE/g) || []).length, 1, "Only the legacy script-property fallback may retain the old typo.");
 assert.doesNotMatch(client, /LABELLOO|Labelloo|Labello/, "The generated client must spell Labeloo correctly.");
+assert.match(stylesheet, /\.action-dock\s*\{[^}]*position:\s*sticky/s, "The action dock should follow short content instead of leaving a fixed-page gap.");
+assert.match(stylesheet, /\.dock-context small\s*\{[^}]*font-size:\s*12px/s, "The changing step hint must remain readable.");
+assert.match(stylesheet, /\.product-links a\s*\{[^}]*font-size:\s*11px/s, "Footer links must remain readable.");
 
 console.log("Verified Apps Script permissions, read-only behavior, branding, and four-stage UI bundle.");

@@ -57,6 +57,10 @@ label-stock compatibility.
 - Help: `https://labs.wiplash.ai/labeloo/support/`
 - Report issue: `https://github.com/Wiplash-ai/labeloo-google-sheets/issues`
 
+## Post-install tip
+
+Open any spreadsheet, then choose **Extensions → Labeloo → Create labels from this sheet**.
+
 ## Distribution
 
 - Visibility: Public

@@ -48,6 +48,8 @@
 ## Listing and accessibility
 
 - [ ] Sidebar and Marketplace artwork use the canonical Labeloo name-tag mark and spell Labeloo consistently.
+- [ ] The changing action hint and Privacy, Support, and Terms links remain readable at normal zoom.
+- [ ] The action dock follows short step content without a large empty gap or unused dark footer space.
 - [ ] Sidebar keyboard navigation, focus outlines, status messages, and disabled states work.
 - [ ] Text remains readable at browser and operating-system zoom settings.
 - [ ] Privacy, support, and terms links open the correct public pages.
