@@ -4,7 +4,7 @@
 
 - Application name: **Labeloo**
 - Default language: English (United States)
-- Category: Productivity
+- Category: Office Applications
 - Pricing: Free of charge
 
 ## Short description
