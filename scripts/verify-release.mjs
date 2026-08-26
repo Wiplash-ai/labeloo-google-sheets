@@ -20,8 +20,10 @@ const expectedAssets = {
   "store-assets/icons/icon-96.png": [96, 96],
   "store-assets/icons/icon-128.png": [128, 128],
   "store-assets/banners/card-220x140.png": [220, 140],
-  "store-assets/screenshots/labeloo-sheets-mapping-1280x800.png": [1280, 800],
-  "store-assets/screenshots/labeloo-import-result-1280x800.png": [1280, 800],
+  "store-assets/screenshots/labeloo-sheets-select-1280x800.png": [1280, 800],
+  "store-assets/screenshots/labeloo-sheets-map-1280x800.png": [1280, 800],
+  "store-assets/screenshots/labeloo-sheets-preview-1280x800.png": [1280, 800],
+  "store-assets/screenshots/labeloo-editor-result-1280x800.png": [1280, 800],
 };
 
 for (const [path, [width, height]] of Object.entries(expectedAssets)) {
@@ -36,12 +38,12 @@ assert.ok(shortDescription.length > 0 && shortDescription.length <= 200, "Market
 assert.match(listing, /Application name: \*\*Labeloo\*\*/);
 assert.match(listing, /Visibility: Public/);
 assert.match(listing, /Extensions → Labeloo → Create labels from this sheet/);
-assert.match(listing, /keep as draft until OAuth verification succeeds/i);
+assert.match(listing, /submitted for review on August 26, 2026/i);
 for (const artwork of [iconSource, bannerSource]) {
   assert.match(artwork, /M35 8h15l14 20L78 8h15L70 42H58Z/, "Marketplace artwork must use the canonical Labeloo mark.");
   assert.doesNotMatch(artwork, /LABELLOO|Labelloo|Labello/, "Marketplace artwork must spell Labeloo correctly.");
 }
-assert.match(bannerSource, /SHEETS → LABELOO/);
+assert.match(bannerSource, /SHEETS → LABELS/);
 
 const oauth = await text("docs/OAUTH_VERIFICATION.md");
 const privacy = await text("docs/PRIVACY_AND_DATA_USE.md");

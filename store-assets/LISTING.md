@@ -26,9 +26,10 @@ ready before anything leaves the spreadsheet.
 
 When you click **Continue in Labeloo**, only the mapped label records are sent
 through an encrypted, account-bound, single-use receipt that expires after ten
-minutes. The full Labeloo editor opens in a new tab so you can choose a label
-sheet, adjust the layout, reuse partially consumed stock, print at 100% scale,
-or save a PDF.
+minutes. The full Labeloo editor opens in a new tab. Add the batch as a new
+Labeloo sheet, or fill blank positions in the active sheet before appending the
+rest. Then choose your label stock, adjust the layout, reuse partially consumed
+sheets, print at 100% scale, or save a PDF.
 
 Privacy is built into the workflow:
 
@@ -67,4 +68,7 @@ Open any spreadsheet, then choose **Extensions → Labeloo → Create labels fro
 - Regions: All regions
 - Installation: Individual installation and domain administrator installation
 - Works with: Google Sheets
-- Marketplace listing submission: keep as draft until OAuth verification succeeds
+- Marketplace listing submission: submitted for review on August 26, 2026
+- OAuth status: production branding published; sensitive-scope verification
+  submitted on August 26, 2026 with the unlisted reviewer video at
+  https://youtu.be/D18pu9MeVbE; all seven review areas are in progress

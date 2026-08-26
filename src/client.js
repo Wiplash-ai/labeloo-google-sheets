@@ -13,11 +13,17 @@ const elements = Object.fromEntries([
   "sourceDimensions", "refreshSource", "headerRow", "firstRow", "lastRow", "mappingList", "mappingCount",
   "previewList", "previewCount", "previewMessage", "connectionMessage", "connectionActions", "connectionCode",
   "statusMessage", "fallbackLink", "continueButton", "stepHeading", "stepStatus", "stepHint", "backButton",
-  "nextButton", "handoffCount", "handoffSource", "mappingMessage",
+  "nextButton", "handoffCount", "handoffSource", "mappingMessage", "continueControl", "destinationMenuButton",
+  "destinationMenu", "destinationSummary",
 ].map((id) => [id, document.getElementById(id)]));
 
 const stepButtons = [...document.querySelectorAll("[data-step-target]")];
 const stepPanels = [...document.querySelectorAll("[data-step]")];
+const destinationOptions = [...document.querySelectorAll("[data-destination]")];
+const DESTINATIONS = Object.freeze({
+  new_sheet: { summary: "Add as a new sheet" },
+  current_sheet: { summary: "Fill current Labeloo sheet" },
+});
 const WORKFLOW_STEPS = Object.freeze([
   { heading: "Choose your rows.", hint: "Choose the range and record shape.", next: "Map fields" },
   { heading: "Match the fields.", hint: "Place each spreadsheet column.", next: "Preview labels" },
@@ -33,6 +39,7 @@ const state = {
   connection: { connected: false },
   connectionBusy: false,
   busy: false,
+  destination: "new_sheet",
   step: 0,
   maxStep: 0,
 };
@@ -79,7 +86,8 @@ function renderWorkflow(focusHeading = false) {
 
   elements.backButton.disabled = state.step === 0;
   elements.nextButton.classList.toggle("hidden", state.step === WORKFLOW_STEPS.length - 1);
-  elements.continueButton.classList.toggle("hidden", state.step !== WORKFLOW_STEPS.length - 1);
+  elements.continueControl.classList.toggle("hidden", state.step !== WORKFLOW_STEPS.length - 1);
+  if (state.step !== WORKFLOW_STEPS.length - 1) setDestinationMenuOpen(false);
   if (state.step < WORKFLOW_STEPS.length - 1) {
     elements.nextButton.querySelector("span").textContent = active.next;
     elements.nextButton.disabled = !stepReady(state.step);
@@ -98,6 +106,32 @@ function setStep(nextStep, { unlock = false, focus = true } = {}) {
   if (next > state.maxStep) return;
   state.step = next;
   renderWorkflow(focus);
+}
+
+function setDestinationMenuOpen(open) {
+  const visible = Boolean(open) && !elements.continueControl.classList.contains("hidden");
+  elements.destinationMenu.classList.toggle("hidden", !visible);
+  elements.destinationMenuButton.setAttribute("aria-expanded", String(visible));
+  elements.destinationMenuButton.querySelector("span").textContent = visible ? "⌄" : "⌃";
+}
+
+function renderDestination() {
+  const destination = DESTINATIONS[state.destination] ? state.destination : "new_sheet";
+  state.destination = destination;
+  elements.destinationSummary.textContent = DESTINATIONS[destination].summary;
+  destinationOptions.forEach((button) => {
+    const selected = button.dataset.destination === destination;
+    button.setAttribute("aria-checked", String(selected));
+    button.classList.toggle("selected", selected);
+  });
+}
+
+function selectDestination(destination) {
+  if (!DESTINATIONS[destination]) return;
+  state.destination = destination;
+  renderDestination();
+  setDestinationMenuOpen(false);
+  elements.destinationMenuButton.focus();
 }
 
 function advanceStep() {
@@ -371,6 +405,7 @@ async function disconnectConnection() {
 
 function updateContinue() {
   elements.continueButton.disabled = state.busy || state.connectionBusy || !state.labels.length || !state.connection.connected;
+  elements.destinationMenuButton.disabled = state.busy;
 }
 
 async function createHandoff() {
@@ -388,6 +423,7 @@ async function createHandoff() {
         range: state.source.range,
       },
       labels: state.labels,
+      destination: state.destination,
     });
     elements.fallbackLink.href = receipt.importUrl;
     elements.fallbackLink.classList.remove("hidden");
@@ -451,6 +487,32 @@ stepButtons.forEach((button) => button.addEventListener("click", () => {
 elements.backButton.addEventListener("click", () => setStep(state.step - 1));
 elements.nextButton.addEventListener("click", advanceStep);
 elements.continueButton.addEventListener("click", createHandoff);
+elements.destinationMenuButton.addEventListener("click", () => {
+  const open = elements.destinationMenuButton.getAttribute("aria-expanded") !== "true";
+  setDestinationMenuOpen(open);
+  if (open) destinationOptions.find((button) => button.getAttribute("aria-checked") === "true")?.focus();
+});
+destinationOptions.forEach((button, index) => {
+  button.addEventListener("click", () => selectDestination(button.dataset.destination));
+  button.addEventListener("keydown", (event) => {
+    if (!["ArrowDown", "ArrowUp", "Home", "End", "Escape"].includes(event.key)) return;
+    event.preventDefault();
+    if (event.key === "Escape") {
+      setDestinationMenuOpen(false);
+      elements.destinationMenuButton.focus();
+      return;
+    }
+    const nextIndex = event.key === "Home"
+      ? 0
+      : event.key === "End"
+        ? destinationOptions.length - 1
+        : (index + (event.key === "ArrowDown" ? 1 : -1) + destinationOptions.length) % destinationOptions.length;
+    destinationOptions[nextIndex].focus();
+  });
+});
+document.addEventListener("click", (event) => {
+  if (!elements.continueControl.contains(event.target)) setDestinationMenuOpen(false);
+});
 
 async function initialize() {
   try {
@@ -458,6 +520,7 @@ async function initialize() {
     state.connection = initial.connection || { connected: false };
     useSource(initial);
     renderConnection();
+    renderDestination();
     elements.app.setAttribute("aria-busy", "false");
     renderWorkflow();
     setStatus("");

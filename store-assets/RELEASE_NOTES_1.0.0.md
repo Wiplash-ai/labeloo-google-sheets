@@ -2,7 +2,7 @@
 
 First public-release candidate:
 
-- Frozen as Apps Script version 3 with a separate versioned release-candidate
+- Frozen as Apps Script version 5 with a separate versioned release-candidate
   deployment; the existing latest-code test deployment remains unchanged.
 
 - Reads the selected cells, surrounding table, used range, or a custom A1 range.
@@ -11,13 +11,15 @@ First public-release candidate:
 - Maps unfamiliar spreadsheet columns into Labeloo fields with a live preview.
 - Presents Select, Map, Preview, and Continue as focused stages designed for
   Google Sheets' compact sidebar.
-- Places the action dock directly after each step with readable guidance and
-  larger Privacy, Support, and Terms links.
+- Keeps the action dock stable at the bottom of every step with readable
+  guidance and a compact Produced by Wiplash.ai footer.
 - Reuses a revocable Wiplash.ai connection without requesting Google Drive access.
 - Transfers mapped labels through an encrypted, account-bound, ten-minute,
   single-use receipt only after the user clicks Continue.
-- Opens imported records as a new Labeloo sheet without replacing local work.
-- Includes explicit privacy, support, terms, loading, retry, and disconnect states.
+- Opens imported records as a new Labeloo sheet by default, or fills blank
+  positions in the active Labeloo sheet before appending the remainder.
+- Includes explicit loading, retry, and disconnect states; privacy, support,
+  and terms remain available from the Marketplace listing.
 
 The add-on does not read formulas, enumerate Drive, modify spreadsheet cells,
 or upload data in the background.

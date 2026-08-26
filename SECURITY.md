@@ -14,6 +14,10 @@ The add-on stores an opaque, revocable Wiplash.ai connector credential in
 Apps Script user properties. Spreadsheet values and credentials are never
 placed in handoff URLs. Label data is carried in an encrypted, account-bound,
 single-use receipt that expires after ten minutes and is removed when consumed.
+The separate session-handoff token expires after two minutes and also requires
+the signed, HttpOnly browser-binding cookie created when that browser approved
+the connector. Forwarding or intercepting the URL alone cannot create a
+Labeloo session.
 
 See the [Labeloo privacy policy](https://labs.wiplash.ai/labeloo/privacy/) for
 the complete data-handling disclosure.

@@ -41,39 +41,43 @@ Mapped labels are sent only after the user clicks **Continue in Labeloo**. The
 manifest allowlists that service and no third-party analytics or advertising
 endpoint.
 
-## Demo video requirements and shot list
+## Submitted demo video
 
-Record one unedited, English-language demonstration using the production
-candidate and the sanitized reviewer spreadsheet:
+Reviewer URL: https://youtu.be/D18pu9MeVbE
 
-1. Show the Google Auth consent screen with the app name **Labeloo**, logo, and
-   the complete requested scope list.
-2. Open the reviewer spreadsheet and choose **Extensions → Labeloo → Create
-   labels from this sheet**.
-3. Show that the sidebar identifies the current workbook, sheet, and range.
-4. Switch among selected cells, surrounding table, used sheet range, and a
-   custom A1 range.
-5. Show row/column orientation, header row, first/last record, field mapping,
-   and preview.
-6. Connect Wiplash.ai and confirm the short code. Explain that the opaque
-   credential is saved in Apps Script user properties and does not grant Drive
-   access.
-7. Click **Continue in Labeloo**, show the hosted editor consuming the receipt,
-   and confirm that imported labels are added without replacing existing work.
-8. Return to the sidebar, run a second import without signing in again, and
-   disconnect the account.
-9. Show the public homepage, privacy policy, support page, and terms page.
+The privacy-reviewed, English-language demonstration uses synthetic spreadsheet
+data and the production candidate. It shows:
 
-The final verification form should use an unlisted video URL and repeat the
-scope justifications above. Do not include real names, addresses, credentials,
-or private spreadsheet data in the recording.
+1. Google's unverified-app warning for **Labeloo**.
+2. The complete three-service consent summary for the current spreadsheet,
+   sidebar UI, and first-party external request.
+3. **Extensions → Labeloo → Create labels from selected cells** in Google
+   Sheets.
+4. Used-range selection, column mapping, preview, and the explicit
+   **Continue in Labeloo** action.
+5. The first-party Wiplash.ai handoff and four synthetic labels arriving in the
+   hosted editor.
+
+The uploaded copy is unlisted, 1920×1080, and 2:35 long. Browser chrome was
+removed so the single-use handoff URL cannot appear. The only account identifier
+shown is the OAuth developer email required by Google's consent screen; no real
+addresses, credentials, or private spreadsheet data appear.
+
+The sensitive-scope verification request was submitted on August 26, 2026.
+Google's Verification Center currently reports all seven review areas as in
+progress: homepage, privacy policy, app functionality, branding, appropriate
+data access, minimum scopes, and additional requirements.
 
 ## Submission gates
 
-- [ ] Production audience enabled in Google Auth Platform.
-- [ ] Marketplace SDK draft uses the exact same three scopes as the manifest.
-- [ ] Authorized domain ownership is verified.
-- [ ] Homepage, privacy, terms, and support URLs are public and branded.
-- [ ] Demo video shows the full consent screen and every scope-dependent flow.
-- [ ] Project contact email is monitored.
-- [ ] Marketplace listing remains a draft until OAuth verification is approved.
+- [x] Production audience enabled in Google Auth Platform.
+- [x] Marketplace SDK includes the three requested add-on scopes plus the two
+      Google-managed `userinfo` scopes shown for the Apps Script integration.
+- [x] Authorized domain ownership and OAuth branding are verified.
+- [x] Homepage, privacy, terms, and support URLs are public and branded.
+- [x] Demo video shows the full consent screen and every requested
+      scope-dependent flow.
+- [x] Project contact email is configured as `support@wiplash.ai`.
+- [x] Marketplace listing submitted for review on August 26, 2026.
+- [x] Sensitive-scope verification submitted with the unlisted video URL on
+      August 26, 2026.

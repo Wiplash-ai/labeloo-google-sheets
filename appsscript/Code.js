@@ -6,11 +6,14 @@ const MAX_SOURCE_CELLS = 200000;
 const CONNECTOR_TOKEN_KEY = "labelooConnectorTokenV1";
 const CONNECTOR_EXPIRES_KEY = "labelooConnectorExpiresV1";
 const CONNECTOR_ACCOUNT_KEY = "labelooConnectorAccountV1";
+const INITIAL_SOURCE_MODE_CACHE_KEY = "labelooInitialSourceModeV1";
 
 function onOpen() {
   SpreadsheetApp.getUi()
     .createAddonMenu()
-    .addItem("Create labels from this sheet", "showLabelooSidebar")
+    .addItem("Create labels from selected cells", "showLabelooSelectionSidebar")
+    .addSeparator()
+    .addItem("Open Labeloo label maker", "showLabelooSidebar")
     .addToUi();
 }
 
@@ -19,6 +22,17 @@ function onInstall() {
 }
 
 function showLabelooSidebar() {
+  showLabelooSidebar_("");
+}
+
+function showLabelooSelectionSidebar() {
+  showLabelooSidebar_("selection");
+}
+
+function showLabelooSidebar_(initialSourceMode) {
+  const cache = CacheService.getUserCache();
+  if (initialSourceMode) cache.put(INITIAL_SOURCE_MODE_CACHE_KEY, initialSourceMode, 60);
+  else cache.remove(INITIAL_SOURCE_MODE_CACHE_KEY);
   const template = HtmlService.createTemplateFromFile("Sidebar");
   SpreadsheetApp.getUi().showSidebar(template.evaluate().setTitle("Labeloo"));
 }
@@ -31,9 +45,14 @@ function getInitialContext() {
   const ranges = sourceRanges_();
   const selected = ranges.selection;
   const table = ranges.table;
-  const defaultMode = selected.getNumRows() * selected.getNumColumns() > 1
+  const cache = CacheService.getUserCache();
+  const requestedMode = cache.get(INITIAL_SOURCE_MODE_CACHE_KEY) || "";
+  cache.remove(INITIAL_SOURCE_MODE_CACHE_KEY);
+  const defaultMode = requestedMode === "selection"
     ? "selection"
-    : table.getNumRows() * table.getNumColumns() > 1 ? "table" : "sheet";
+    : selected.getNumRows() * selected.getNumColumns() > 1
+      ? "selection"
+      : table.getNumRows() * table.getNumColumns() > 1 ? "table" : "sheet";
   return {
     connection: connectorState_(),
     sources: sourceOptions_(ranges),
@@ -141,6 +160,7 @@ function createImportReceipt(request) {
       body: {
         source: request.source,
         labels: request.labels,
+        destination: request.destination,
       },
     });
   } catch (error) {

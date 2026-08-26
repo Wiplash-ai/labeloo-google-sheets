@@ -29,7 +29,8 @@ sidebar client and generates the HTML fragments consumed by Apps Script.
 3. Run `npm run build` and `npm run clasp -- push`.
 4. In Apps Script, choose **Deploy → Test deployments → Editor add-on**.
 5. Select the test spreadsheet and **Latest code**, save, then execute the test.
-6. In Sheets, open **Extensions → Labeloo → Create labels from this sheet**.
+6. In Sheets, open **Extensions → Labeloo → Create labels from selected cells**
+   or **Open Labeloo label maker**.
 
 This installs only a development test. It does not create a Google Workspace
 Marketplace listing or release the add-on to other users.
@@ -46,14 +47,16 @@ Google Cloud project:
 
 The OAuth consent configuration uses the Labeloo name and logo, the Labeloo
 product and privacy pages, Wiplash.ai terms, and the authorized `wiplash.ai`
-domain. The developer Google account is the only test user.
+domain. The audience is in Production, OAuth branding is verified and
+published, and the Google Workspace Marketplace listing was submitted for
+review on August 26, 2026.
 
-An unpublished test deployment can still show Google's **unverified app**
-warning. That warning's developer-details dialog names the Google account that
-owns the test project. This is expected only while the OAuth project is in
-Testing and verification is incomplete. Do not release the Marketplace listing
-until OAuth verification has passed; the normal consent screen identifies the
-app as **Labeloo**.
+Google's **unverified app** warning can remain until sensitive-scope
+verification is complete. The OAuth verification request was submitted on
+August 26, 2026 with an unlisted reviewer video showing the consent screen and
+the live `script.container.ui` and `script.external_request` flows. All seven
+Verification Center review areas are now in progress. The public listing must
+not be considered release-ready until that separate verification is approved.
 
 Keep this project separate from `labeloo-production`, which serves the existing
 Labeloo Drive/account integration. A public Marketplace add-on needs its own
@@ -64,7 +67,7 @@ See [Architecture](docs/ARCHITECTURE.md) for the reusable connector contract.
 
 ## Release preparation
 
-The current unpublished build is the public-release candidate. Release and
+Apps Script version 5 is the submitted public-release candidate. Release and
 review materials live alongside the code:
 
 - [Marketplace listing copy](store-assets/LISTING.md)
@@ -74,13 +77,14 @@ review materials live alongside the code:
 - [Privacy and data-use inventory](docs/PRIVACY_AND_DATA_USE.md)
 
 The production account and receipt service is deployed at
-`https://auth.wiplash.ai/labeloo`. The Apps Script project remains in Google
-Auth Platform testing and the Marketplace listing must remain a draft until
-OAuth verification succeeds.
+`https://auth.wiplash.ai/labeloo`. The Apps Script project is in Google Auth
+Platform Production, the verified OAuth branding is published, and the
+Marketplace listing and sensitive-scope verification are both in review.
+Public release remains gated on sensitive-scope OAuth approval.
 
-Release candidate 1.0.0 is frozen as Apps Script version `3` and deployment
+Release candidate 1.0.0 is frozen as Apps Script version `5` and deployment
 `AKfycbxLznNHzKFkRIXOX96EPwg5QUYSgYexqJ3-AbIMldEeC0Eg0Vwy8UVA7TEYHlFnYGq1qA`.
-Versions `1` and `2` remain available as earlier release-candidate snapshots.
+Versions `1` through `4` remain available as earlier release-candidate snapshots.
 The separate `@HEAD` test deployment remains available for unpublished QA.
 
 ## Security and license

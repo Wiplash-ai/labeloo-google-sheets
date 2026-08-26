@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800">
+  <defs><clipPath id="screen"><rect y="146" width="1280" height="654"/></clipPath></defs>
+  <rect width="1280" height="800" fill="#f7f3e8"/>
+  <rect width="1280" height="146" fill="#16201f"/>
+  <rect y="141" width="1280" height="5" fill="#d8a327"/>
+  <g transform="translate(38 33) scale(.58)">
+    <rect width="128" height="128" rx="24" fill="#fffef9"/>
+    <rect x="7" y="7" width="114" height="114" rx="20" fill="#16201f"/>
+    <path d="M35 8h15l14 20L78 8h15L70 42H58Z" fill="#d8a327"/>
+    <rect x="54" y="27" width="20" height="16" rx="5" fill="#fffef9"/>
+    <path d="M31 38h66a12 12 0 0 1 12 12v51a12 12 0 0 1-12 12H31a12 12 0 0 1-12-12V50a12 12 0 0 1 12-12Z" fill="#087f78"/>
+    <path d="M29 53h70v45a7 7 0 0 1-7 7H36a7 7 0 0 1-7-7V53Z" fill="#fffef9"/>
+    <path d="M42 68h44" stroke="#16201f" stroke-width="8" stroke-linecap="round"/>
+    <path d="M48 84h32" stroke="#d8a327" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <text x="132" y="48" fill="#8dc9bd" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="2">3 / PREVIEW</text>
+  <text x="132" y="92" fill="#fffef9" font-family="Georgia, serif" font-size="36" font-weight="700">Check every label first.</text>
+  <text x="132" y="120" fill="#cbd7d4" font-family="Arial, sans-serif" font-size="16">Nothing is handed off until the preview looks right.</text>
+  <rect x="1002" y="44" width="230" height="52" rx="26" fill="#087f78"/>
+  <text x="1117" y="76" text-anchor="middle" fill="#fffef9" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1">PRIVATE BY DEFAULT</text>
+  <rect y="146" width="1280" height="654" fill="#f7f3e8"/>
+</svg>

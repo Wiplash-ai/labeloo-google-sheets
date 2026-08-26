@@ -142,15 +142,31 @@
       <div class="step-actions">
         <button id="backButton" class="button button--quiet" type="button" disabled>← Back</button>
         <button id="nextButton" class="button button--primary" type="button"><span>Map fields</span><span aria-hidden="true">→</span></button>
-        <button id="continueButton" class="button button--primary hidden" type="button" disabled>
-          <span>Continue in Labeloo</span><span aria-hidden="true">↗</span>
-        </button>
+        <div id="continueControl" class="continue-control hidden">
+          <button id="continueButton" class="button button--primary" type="button" disabled>
+            <span class="continue-label"><strong>Continue in Labeloo</strong><small id="destinationSummary">Add as a new sheet</small></span>
+            <span aria-hidden="true">↗</span>
+          </button>
+          <button id="destinationMenuButton" class="destination-menu-button" type="button" aria-label="Choose where labels are added" aria-haspopup="menu" aria-expanded="false">
+            <span aria-hidden="true">⌃</span>
+          </button>
+          <div id="destinationMenu" class="destination-menu hidden" role="menu" aria-label="Labeloo destination">
+            <button type="button" role="menuitemradio" aria-checked="true" data-destination="new_sheet">
+              <span class="destination-check" aria-hidden="true">✓</span>
+              <span><strong>Add as a new sheet</strong><small>New Labeloo sheet · existing sheets stay unchanged</small></span>
+            </button>
+            <button type="button" role="menuitemradio" aria-checked="false" data-destination="current_sheet">
+              <span class="destination-check" aria-hidden="true">✓</span>
+              <span><strong>Fill current Labeloo sheet</strong><small>Same active sheet · fill blanks, then append</small></span>
+            </button>
+          </div>
+        </div>
       </div>
-      <nav class="product-links" aria-label="Labeloo links">
-        <a href="https://labs.wiplash.ai/labeloo/privacy/" target="_blank" rel="noopener">Privacy</a>
-        <a href="https://labs.wiplash.ai/labeloo/support/" target="_blank" rel="noopener">Support</a>
-        <a href="https://wiplash.ai/legal/terms" target="_blank" rel="noopener">Terms</a>
-      </nav>
+      <div class="footer-identity">
+        <a href="https://labs.wiplash.ai/labeloo/" target="_blank" rel="noopener">Labeloo</a>
+        <span>Produced by</span>
+        <a href="https://wiplash.ai/" target="_blank" rel="noopener">Wiplash.ai</a>
+      </div>
     </footer>
 
     <?!= include('Client'); ?>

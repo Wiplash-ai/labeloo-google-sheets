@@ -33,25 +33,31 @@
 
 ## Account and handoff
 
+- [ ] Extensions → Labeloo → Create labels from selected cells opens with the exact selected range.
 - [ ] Wiplash connection requires an explicit click.
 - [ ] Repeated clicks cannot start duplicate connection requests.
 - [ ] The short code and connection page agree.
 - [ ] The connected account persists after closing and reopening the sidebar.
 - [ ] A second import does not require another sign-in.
+- [ ] Continue in Labeloo opens the editor already signed in and loads the labels automatically.
+- [ ] Opening a handoff URL without the approving browser's binding cookie is rejected.
+- [ ] A handoff URL rejects replay and expires after two minutes.
 - [ ] Disconnect revokes the connector and disables Continue.
 - [ ] Expired credentials return the sidebar to a reconnect state.
 - [ ] Popup blocking exposes the fallback connection or editor link.
 - [ ] Receipt URLs contain no spreadsheet values or reusable credentials.
 - [ ] A receipt can be consumed once, rejects replay, and expires after ten minutes.
 - [ ] Imported labels are added as a new Labeloo sheet without replacing local work.
+- [ ] The Continue caret defaults to a new sheet and clearly distinguishes that from filling the active Labeloo sheet's blank slots before appending.
 
 ## Listing and accessibility
 
 - [ ] Sidebar and Marketplace artwork use the canonical Labeloo name-tag mark and spell Labeloo consistently.
-- [ ] The changing action hint and Privacy, Support, and Terms links remain readable at normal zoom.
-- [ ] The action dock follows short step content without a large empty gap or unused dark footer space.
+- [ ] The changing action hint remains readable at normal zoom.
+- [ ] The action dock remains aligned to the bottom across all four steps, with intentional breathing room on short steps.
+- [ ] Labeloo and left-aligned Produced by Wiplash.ai attribution remain visible in the footer.
 - [ ] Sidebar keyboard navigation, focus outlines, status messages, and disabled states work.
 - [ ] Text remains readable at browser and operating-system zoom settings.
-- [ ] Privacy, support, and terms links open the correct public pages.
+- [ ] Privacy, support, and terms links remain correct in the Marketplace listing.
 - [ ] Listing screenshots show the real Sheets integration and contain no private data.
 - [ ] Reviewer instructions and temporary account work from a fresh Google account.
